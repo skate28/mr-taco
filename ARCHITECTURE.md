@@ -1,0 +1,51 @@
+# Mr. Taco — architecture
+
+Pitch site for a small chain of Mexican street-food taco trucks in Jacksonville.
+Next.js App Router · React · TypeScript · Tailwind CSS v4 · framer-motion · lucide-react.
+
+The design is its own: papel picado, a hand-drawn SVG taco truck, lime / chili / hot pink / turquoise / yellow.
+Type is Titan One, Pacifico, and Nunito. Motion is a CSS truck roll, steam, sizzle, and marquee, plus
+framer-motion scroll reveals and a few floating illustrations. `prefers-reduced-motion` stops those animations.
+
+## Files
+
+| Owner | Files |
+| --- | --- |
+| **Leads** | `src/content/site.ts` (data only), `public/images/` |
+| **Code** | `src/app/`, `src/components/`, `src/lib/`, `src/content/types.ts`, `src/content/index.ts`, config, docs |
+
+```
+src/
+  app/          layout (metadata, robots), page, robots.ts, sitemap.ts, icon, OG/Twitter images, not-found
+  components/   one file per section, plus the truck, papel picado, and small client islands
+  content/      types.ts (contract), index.ts (the single import point), site.ts (data)
+  lib/          pure helpers: hours, menu, money, ordering, reviews, photos, maps, contact, nav, trucks, faq, indexing, site-url
+public/images/  real photos only
+```
+
+## How content is wired
+
+Components import content only via `import { site } from "@/content"`.
+
+## Page order
+
+Header → Hero (title, tagline, Find a truck, illustrated truck) → dish marquee → Menu → Find a truck →
+Order online → Reviews → Photos → About → FAQ → Footer.
+Phones get a sticky Find a truck bar, plus Menu and Order when those sections exist.
+
+Every content section returns `null` when its content is empty, and its header link disappears with it.
+Call buttons, hours, maps, ordering buttons, and prices hide individually when their fields are empty.
+
+## Indexing
+
+Off. Only `ALLOW_INDEXING=true` enables it (owner sign-off). Otherwise robots.txt disallows `/`, metadata robots
+is `noindex, nofollow` (also googleBot), and every response sends `X-Robots-Tag: noindex, nofollow`.
+
+## Not on this site
+
+No "coming soon" cards, text pre-orders, AI phone answering, catering, or waitlist UI. The types don't carry
+those fields. No AI-generated or stock photos: the truck, tacos, limes, and papel picado are SVG.
+
+## Deploy
+
+Vercel, Next.js preset, repo root. No env vars required. Set `ALLOW_INDEXING=true` only after owner sign-off.
