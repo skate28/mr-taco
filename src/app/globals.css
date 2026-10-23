@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+/*
+  Mr. Taco street palette. Live values come from `site.palette` when set (see layout.tsx).
+  Lime, chili red, hot pink, turquoise, sunny yellow, on warm paper.
+*/
+:root {
+  --mt-ink: #1a120c;
+  --mt-chili: #c4161c;
+  --mt-chili-deep: #8e0e14;
+  --mt-lime: #c6ef3a;
+  --mt-pink: #ff4d8d;
+  --mt-pink-deep: #c2185b;
+  --mt-turquoise: #14c4c4;
+  --mt-yellow: #ffe14d;
+  --mt-cream: #fff6e4;
+  --mt-paper: #fffbf3;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-ink: var(--mt-ink);
+  --color-chili: var(--mt-chili);
+  --color-chili-deep: var(--mt-chili-deep);
+  --color-lime: var(--mt-lime);
+  --color-pink: var(--mt-pink);
+  --color-pink-deep: var(--mt-pink-deep);
+  --color-turquoise: var(--mt-turquoise);
+  --color-yellow: var(--mt-yellow);
+  --color-cream: var(--mt-cream);
+  --color-paper: var(--mt-paper);
+  --font-sans: var(--font-sans-face), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-face), "Arial Black", Impact, sans-serif;
+  --font-script: var(--font-script-face), "Brush Script MT", cursive;
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-spin-slow: spin 22s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes truck-in {
+  0% {
+    transform: translateX(78%);
+  }
+  72% {
+    transform: translateX(-2%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes wheel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-640deg);
+  }
+}
+
+@keyframes steam {
+  0% {
+    transform: translateY(8px) scale(0.6);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-36px) scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes sizzle {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(var(--tilt, 0deg));
+  }
+  30% {
+    transform: rotate(calc(var(--tilt, 0deg) - 1.6deg)) translateY(-3px);
+  }
+  70% {
+    transform: rotate(calc(var(--tilt, 0deg) + 1.6deg)) translateY(-1px);
+  }
+}
+
+@keyframes btn-wiggle {
+  0%,
+  100% {
+    transform: translateY(-2px) rotate(0);
+  }
+  40% {
+    transform: translateY(-2px) rotate(-2deg);
+  }
+  70% {
+    transform: translateY(-2px) rotate(2deg);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  background: var(--mt-cream);
+}
+
+body {
+  background-color: var(--mt-cream);
+  color: var(--mt-ink);
+  font-family: var(--font-sans);
+}
+
+address {
+  font-style: normal;
+}
+
+::selection {
+  background: var(--mt-yellow);
+  color: var(--mt-ink);
+}
+
+.hero-dots {
+  background-image: radial-gradient(color-mix(in oklab, var(--mt-ink) 16%, transparent) 1.4px, transparent 1.6px);
+  background-size: 18px 18px;
+}
+
+.paper-dots {
+  background-image: radial-gradient(color-mix(in oklab, var(--mt-ink) 10%, transparent) 1.2px, transparent 1.4px);
+  background-size: 16px 16px;
+}
+
+.sign-extrude {
+  text-shadow:
+    1px 1px 0 var(--mt-ink),
+    2px 2px 0 var(--mt-ink),
+    3px 3px 0 var(--mt-ink),
+    4px 4px 0 var(--mt-ink),
+    5px 5px 0 var(--mt-ink),
+    6px 6px 0 var(--mt-ink);
+}
+
+.sign-extrude-sm {
+  text-shadow:
+    1px 1px 0 var(--mt-ink),
+    2px 2px 0 var(--mt-ink),
+    3px 3px 0 var(--mt-ink);
+}
+
+.color-bar {
+  height: 0.45rem;
+  background: linear-gradient(
+    90deg,
+    var(--mt-chili) 0 20%,
+    var(--mt-yellow) 20% 40%,
+    var(--mt-turquoise) 40% 60%,
+    var(--mt-pink) 60% 80%,
+    var(--mt-lime) 80% 100%
+  );
+}
+
+.truck-roll {
+  animation: truck-in 1.35s cubic-bezier(0.16, 0.84, 0.24, 1) both;
+}
+
+.wheel {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wheel-spin 1.35s linear both;
+}
+
+.steam {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: steam 2.2s ease-out infinite;
+}
+
+.sizzle {
+  animation: sizzle 0.9s ease-in-out infinite;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .wiggle:hover {
+    animation: wiggle 0.5s ease-in-out;
+  }
+
+  .pop:hover {
+    animation: btn-wiggle 0.45s ease-in-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-marquee,
+  .animate-spin-slow,
+  .truck-roll,
+  .wheel,
+  .steam,
+  .sizzle,
+  .wiggle,
+  .pop {
+    animation: none;
+  }
+
+  .marquee-clip {
+    overflow: visible;
+  }
+
+  .marquee-track {
+    width: auto;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.25rem;
+  }
+
+  .marquee-track > ul:last-child {
+    display: none;
+  }
+}
