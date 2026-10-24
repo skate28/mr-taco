@@ -33,7 +33,7 @@ function Flag({ color, variant }: { color: string; variant: number }) {
 /** Hanging cut-paper banner. Decorative. */
 export function PapelPicado({ className }: { className?: string }) {
   return (
-    <div aria-hidden="true" className={cn("relative overflow-hidden", className)}>
+    <div aria-hidden="true" className={cn("relative max-w-full overflow-hidden", className)}>
       <div className="absolute inset-x-0 top-1.5 h-[3px] bg-ink" />
       <div className="flex w-max">
         {Array.from({ length: 28 }, (_, index) => (

@@ -1,6 +1,4 @@
-import type { OrderingLink, OrderingPlatform, SiteContent } from "@/content/types";
-
-const PLATFORMS = new Set<OrderingPlatform>(["uber-eats", "grubhub", "doordash"]);
+import type { OrderingLink, SiteContent } from "@/content/types";
 
 export function safeHref(href: string | null | undefined): string | null {
   const value = href?.trim() ?? "";
@@ -14,13 +12,17 @@ export function httpHref(href: string | null | undefined): string | null {
   return value && /^https?:/i.test(value) ? value : null;
 }
 
-/** Delivery buttons with a real https URL. Blank or unknown platforms are dropped. */
-export function orderingLinks(content: SiteContent): OrderingLink[] {
-  return content.orderingLinks.flatMap((link) => {
-    if (!PLATFORMS.has(link.platform)) return [];
-    const href = httpHref(link.href);
+/** Every ordering link with a real href. URLs are never rewritten. */
+export function orderingLinks(links: OrderingLink[] | null | undefined): OrderingLink[] {
+  return (links ?? []).flatMap((link) => {
     const label = link.label.trim();
-    if (!href || !label) return [];
-    return [{ platform: link.platform, label, href }];
+    const href = link.kind === "phone" ? safeHref(link.href) : httpHref(link.href);
+    if (!label || !href) return [];
+    if (link.kind === "phone" && !/^tel:/i.test(href)) return [];
+    return [{ label, href, kind: link.kind }];
   });
+}
+
+export function siteOrderingLinks(content: SiteContent): OrderingLink[] {
+  return orderingLinks(content.orderingLinks);
 }

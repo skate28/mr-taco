@@ -91,10 +91,10 @@ export function MenuTabs({ categories }: { categories: MenuTabCategory[] }) {
         <AnimatePresence mode="wait">
           <motion.div
             key={current.id}
-            initial={reduce ? false : { opacity: 0, y: 10 }}
+            initial={reduce === false ? { opacity: 0, y: 10 } : false}
             animate={{ opacity: 1, y: 0 }}
-            {...(reduce ? {} : { exit: { opacity: 0, y: -8 } })}
-            transition={{ duration: reduce ? 0 : 0.22 }}
+            {...(reduce === false ? { exit: { opacity: 0, y: -8 } } : {})}
+            transition={{ duration: reduce === false ? 0.22 : 0 }}
           >
             <h3 className="font-display text-3xl uppercase text-chili sm:text-4xl">{current.name}</h3>
             {current.description && <p className="mt-2 max-w-2xl text-ink/75">{current.description}</p>}

@@ -5,15 +5,15 @@ import { SectionHeading } from "@/components/section-heading";
 import { container } from "@/components/styles";
 import { site } from "@/content";
 import { cn } from "@/lib/cn";
-import { galleryPhotos, photoDimensions } from "@/lib/photos";
+import { galleryPhotos } from "@/lib/photos";
 
-/** Real photos from `public/images/` only. Hidden when there are none. */
+/** Food photos that are not already the hero, a favorite, or the fresh strip. */
 export function Gallery() {
-  const photos = galleryPhotos(site.photos);
+  const photos = galleryPhotos(site.photos, site.heroImage);
   if (photos.length === 0) return null;
 
   return (
-    <section id="photos" aria-labelledby="photos-title" className="scroll-mt-24 border-b-[3px] border-ink bg-yellow py-16 sm:py-24">
+    <section id="photos" aria-labelledby="photos-title" className="scroll-mt-24 overflow-x-clip border-b-[3px] border-ink bg-yellow py-16 sm:py-24">
       <div className={container}>
         <Reveal>
           <SectionHeading id="photos-title" kicker="On the street" title="Photos" />
@@ -26,7 +26,8 @@ export function Gallery() {
                   <Image
                     src={photo.src}
                     alt={photo.alt}
-                    {...photoDimensions(photo)}
+                    width={photo.width}
+                    height={photo.height}
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="h-auto w-full rounded-xl"
                   />

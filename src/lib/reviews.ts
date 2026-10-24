@@ -13,6 +13,7 @@ export type ReviewQuote = {
   rating: number | null;
   sourceLabel: string;
   href: string | null;
+  locationId: string | null;
 };
 
 function score(rating: Rating | null | undefined): ReviewScore | null {
@@ -41,7 +42,7 @@ export function reviewQuotes(testimonials: Testimonial[]): ReviewQuote[] {
       typeof item.rating === "number" && Number.isFinite(item.rating) && item.rating >= 1 && item.rating <= 5
         ? item.rating
         : null;
-    return [{ quote, rating, sourceLabel, href: httpHref(item.sourceUrl) }];
+    return [{ quote, rating, sourceLabel, href: httpHref(item.sourceUrl), locationId: item.locationId?.trim() || null }];
   });
 }
 

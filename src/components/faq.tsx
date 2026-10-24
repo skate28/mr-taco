@@ -9,7 +9,7 @@ export function Faq() {
   if (items.length === 0) return null;
 
   return (
-    <section id="faq" aria-labelledby="faq-title" className="scroll-mt-24 border-b-[3px] border-ink bg-paper py-16 sm:py-24">
+    <section id="faq" aria-labelledby="faq-title" className="scroll-mt-24 overflow-x-clip border-b-[3px] border-ink bg-paper py-16 sm:py-24">
       <div className={container}>
         <Reveal>
           <SectionHeading id="faq-title" title="FAQ" />

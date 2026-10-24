@@ -10,7 +10,7 @@ export function About() {
   const heading = site.about.heading.trim() || site.name;
 
   return (
-    <section id="about" aria-labelledby="about-title" className="scroll-mt-24 border-b-[3px] border-ink bg-lime py-16 sm:py-24">
+    <section id="about" aria-labelledby="about-title" className="scroll-mt-24 overflow-x-clip border-b-[3px] border-ink bg-lime py-16 sm:py-24">
       <div className={container}>
         <Reveal>
           <SectionHeading id="about-title" title={heading} />

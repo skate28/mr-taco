@@ -30,7 +30,7 @@ export function Reviews() {
   const scores = reviewScores(site);
 
   return (
-    <section id="reviews" aria-labelledby="reviews-title" className="scroll-mt-24 border-b-[3px] border-ink bg-chili py-16 text-cream sm:py-24">
+    <section id="reviews" aria-labelledby="reviews-title" className="scroll-mt-24 overflow-x-clip border-b-[3px] border-ink bg-chili py-16 text-cream sm:py-24">
       <div className={container}>
         <Reveal>
           <SectionHeading id="reviews-title" kicker="From the line" title="Reviews" tone="cream" />
@@ -64,32 +64,38 @@ export function Reviews() {
           )}
         </Reveal>
         <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {quotes.map((quote, index) => (
-            <li key={`${quote.sourceLabel}-${index}`}>
-              <Reveal delay={(index % 3) * 0.08}>
-                <figure className="flex h-full flex-col rounded-[1.75rem] border-[3px] border-ink bg-paper p-6 text-ink shadow-[6px_6px_0_0_var(--mt-ink)]">
-                  <div className="flex items-start justify-between gap-4">
-                    <span aria-hidden="true" className="-mt-3 font-script text-7xl leading-none text-pink-deep">
-                      “
-                    </span>
-                    {quote.rating !== null && <Stars value={quote.rating} />}
-                  </div>
-                  <blockquote className="mt-1 flex-1 text-lg font-semibold leading-relaxed">
-                    <p>{quote.quote}</p>
-                  </blockquote>
-                  <figcaption className="mt-5 text-sm font-extrabold uppercase tracking-wider text-ink/70">
-                    {quote.href ? (
-                      <a href={quote.href} target="_blank" rel="noopener noreferrer" className={cn("underline underline-offset-4 hover:text-chili", focusRing)}>
-                        {quote.sourceLabel}
-                      </a>
-                    ) : (
-                      quote.sourceLabel
-                    )}
-                  </figcaption>
-                </figure>
-              </Reveal>
-            </li>
-          ))}
+          {quotes.map((quote, index) => {
+            const place = quote.locationId
+              ? site.locations.find((location) => location.id === quote.locationId)?.name.trim() ?? ""
+              : "";
+            const caption = [quote.sourceLabel, place].filter(Boolean).join(" · ");
+            return (
+              <li key={`${quote.sourceLabel}-${index}`}>
+                <Reveal delay={(index % 3) * 0.08}>
+                  <figure className="flex h-full flex-col rounded-[1.75rem] border-[3px] border-ink bg-paper p-6 text-ink shadow-[6px_6px_0_0_var(--mt-ink)]">
+                    <div className="flex items-start justify-between gap-4">
+                      <span aria-hidden="true" className="-mt-3 font-script text-7xl leading-none text-pink-deep">
+                        “
+                      </span>
+                      {quote.rating !== null && <Stars value={quote.rating} />}
+                    </div>
+                    <blockquote className="mt-1 flex-1 text-lg font-semibold leading-relaxed">
+                      <p>{quote.quote}</p>
+                    </blockquote>
+                    <figcaption className="mt-5 text-sm font-extrabold uppercase tracking-wider text-ink/70">
+                      {quote.href ? (
+                        <a href={quote.href} target="_blank" rel="noopener noreferrer" className={cn("underline underline-offset-4 hover:text-chili", focusRing)}>
+                          {caption}
+                        </a>
+                      ) : (
+                        caption
+                      )}
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>

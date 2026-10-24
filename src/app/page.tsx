@@ -1,5 +1,7 @@
 import { About } from "@/components/about";
 import { Faq } from "@/components/faq";
+import { Favorites } from "@/components/favorites";
+import { Fresh } from "@/components/fresh";
 import { Gallery } from "@/components/gallery";
 import { Hero } from "@/components/hero";
 import { Locations } from "@/components/locations";
@@ -11,10 +13,12 @@ import { Reviews } from "@/components/reviews";
 /** Every content section below returns null when its content is empty. */
 export default function HomePage() {
   return (
-    <main id="content">
+    <main id="content" className="overflow-x-clip">
       <Hero />
       <Marquee />
+      <Favorites />
       <MenuSection />
+      <Fresh />
       <Locations />
       <Order />
       <Reviews />

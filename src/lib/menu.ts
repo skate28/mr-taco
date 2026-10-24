@@ -24,9 +24,18 @@ export function menuView(content: SiteContent = site): MenuCategory[] {
   return visibleCategories(getMenu(content));
 }
 
-/** Decorative marquee. Dish names first, then real menu item names. */
+/** Decorative marquee. `marquee` first, then real menu item names. */
 export function marqueeWords(content: SiteContent = site): string[] {
-  const named = content.dishNames.map((name) => name.trim()).filter(Boolean);
+  const named = (content.marquee ?? []).map((name) => name.trim()).filter(Boolean);
   if (named.length > 0) return named;
   return menuView(content).flatMap((category) => category.items.map((item) => item.name.trim()).filter(Boolean));
+}
+
+export function menuChoices(content: SiteContent = site) {
+  return content.menuChoices.flatMap((group) => {
+    const label = group.label.trim();
+    const options = group.options.map((option) => option.trim()).filter(Boolean);
+    if (!label || options.length === 0) return [];
+    return [{ label, options, note: group.note?.trim() ?? "" }];
+  });
 }

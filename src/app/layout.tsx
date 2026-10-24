@@ -41,13 +41,12 @@ function paletteStyle(palette: Palette | undefined): CSSProperties | undefined {
   if (!palette) return undefined;
   return {
     "--mt-ink": palette.ink,
-    "--mt-chili": palette.chili,
-    "--mt-chili-deep": palette.chiliDeep,
-    "--mt-lime": palette.lime,
-    "--mt-pink": palette.pink,
-    "--mt-pink-deep": palette.pinkDeep,
-    "--mt-turquoise": palette.turquoise,
-    "--mt-yellow": palette.yellow,
+    "--mt-chili": palette.brand,
+    "--mt-chili-deep": palette.brandDeep,
+    "--mt-lime": palette.lime ?? "#8cc63f",
+    "--mt-pink": palette.pink ?? "#ff3e8a",
+    "--mt-turquoise": palette.accent,
+    "--mt-yellow": palette.mustard,
     "--mt-cream": palette.cream,
     "--mt-paper": palette.paper,
   } as CSSProperties;
@@ -78,7 +77,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: site.palette?.chili ?? "#c4161c",
+  themeColor: site.palette?.brand ?? "#e23b2e",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,

@@ -55,6 +55,7 @@ function parseMinutes(value: string | null | undefined): number | null {
 export function formatClock(value: string): string {
   const minutes = parseMinutes(value);
   if (minutes == null) return value;
+  if (minutes === 0) return "midnight";
   const hour24 = Math.floor(minutes / 60);
   const minute = minutes % 60;
   const suffix = hour24 >= 12 ? "PM" : "AM";
@@ -140,7 +141,16 @@ export function getShopStatus(now: Date, content: ShopClockInput): ShopStatus {
         } else if (closeMinutes > openMinutes) {
           isOpen = zoned.minutes >= openMinutes && zoned.minutes < closeMinutes;
         } else {
+          // Close at or before open: the window runs past midnight.
           isOpen = zoned.minutes >= openMinutes || zoned.minutes < closeMinutes;
+        }
+      }
+
+      if (isOpen !== true && zoned.weekday) {
+        const carried = openFromPreviousNight(hours, zoned.weekday, zoned.minutes);
+        if (carried) {
+          isOpen = true;
+          todayWindow = formatWindow(carried.open, carried.close);
         }
       }
     }
@@ -186,6 +196,23 @@ export function scheduleRows(hours: Hours): ScheduleRow[] {
 }
 
 const ORDER_FROM_SUN: Weekday[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
+function previousWeekday(day: Weekday): Weekday {
+  const index = ORDER_FROM_SUN.indexOf(day);
+  return ORDER_FROM_SUN[(index + 6) % 7] ?? "sun";
+}
+
+/** Still inside yesterday's overnight window (a close at or before the open). */
+function openFromPreviousNight(hours: Hours, weekday: Weekday, minutes: number): { open: string; close: string } | null {
+  const previous = hours.byDay?.[previousWeekday(weekday)];
+  if (!previous || previous.closed || !previous.openTime || !previous.closeTime) return null;
+  const openMinutes = parseMinutes(previous.openTime);
+  const closeMinutes = parseMinutes(previous.closeTime);
+  if (openMinutes == null || closeMinutes == null) return null;
+  if (closeMinutes > openMinutes) return null;
+  if (minutes < closeMinutes) return { open: previous.openTime, close: previous.closeTime };
+  return null;
+}
 
 export function nextOpeningLabel(now: Date, hours: Hours): string | null {
   if (!hoursConfirmed(hours)) return null;
