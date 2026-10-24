@@ -36,7 +36,7 @@ export function MenuSection() {
   return (
     <section id="menu" aria-labelledby="menu-title" className="scroll-mt-24 overflow-x-clip border-b-[3px] border-ink bg-paper py-16 sm:py-24">
       <div className={container}>
-        <Reveal>
+        <Reveal from="side">
           <SectionHeading id="menu-title" kicker="At the window" title="Menu" />
           {extras.length > 0 && (
             <p className="mt-4 font-display text-sm uppercase tracking-[0.16em] text-ink/70">{extras.join(" · ")}</p>
@@ -48,7 +48,7 @@ export function MenuSection() {
           )}
         </Reveal>
         {choices.length > 0 && (
-          <Reveal delay={0.05}>
+          <Reveal from="pop" delay={0.05}>
             <ul className="mt-8 grid gap-4 sm:grid-cols-2">
               {choices.map((group) => (
                 <li key={group.label} className="rounded-2xl border-[3px] border-ink bg-cream p-4">
@@ -61,7 +61,7 @@ export function MenuSection() {
           </Reveal>
         )}
         {board && (
-          <Reveal delay={0.08}>
+          <Reveal from="tilt" delay={0.08}>
             <figure className="mt-8 w-full max-w-md -rotate-1 overflow-hidden rounded-2xl border-[3px] border-ink bg-paper p-2 shadow-[6px_6px_0_0_var(--mt-ink)]">
               <div className="aspect-[5/1] overflow-hidden rounded-xl">
                 <Image
@@ -76,7 +76,7 @@ export function MenuSection() {
             </figure>
           </Reveal>
         )}
-        <Reveal delay={0.08} className="mt-10">
+        <Reveal from="pop" delay={0.08} className="mt-10">
           <MenuTabs categories={categories} />
         </Reveal>
       </div>

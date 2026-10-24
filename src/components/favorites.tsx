@@ -14,13 +14,13 @@ export function Favorites() {
   return (
     <section aria-labelledby="favorites-title" className="overflow-x-clip border-b-[3px] border-ink bg-pink py-16 sm:py-20">
       <div className={container}>
-        <Reveal>
+        <Reveal from="side">
           <SectionHeading id="favorites-title" kicker="From the window" title="Favorites" />
         </Reveal>
         <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {photos.map((photo, index) => (
             <li key={photo.src}>
-              <Reveal delay={(index % 5) * 0.05}>
+              <Reveal from="pop" delay={(index % 5) * 0.05}>
                 <figure className="rounded-2xl border-[3px] border-ink bg-paper p-1.5 shadow-[5px_5px_0_0_var(--mt-ink)]">
                   <Image
                     src={photo.src}

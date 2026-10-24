@@ -4,8 +4,10 @@ Pitch site for a small chain of Mexican street-food taco trucks in Jacksonville.
 Next.js App Router · React · TypeScript · Tailwind CSS v4 · framer-motion · lucide-react.
 
 The design is its own: papel picado, a hand-drawn SVG taco truck, lime / chili / hot pink / turquoise / yellow.
-Type is Titan One, Pacifico, and Nunito. Motion is a CSS truck roll, steam, sizzle, and marquee, plus
-framer-motion scroll reveals and a few floating illustrations. `prefers-reduced-motion` stops those animations.
+Type is Titan One, Pacifico, and Nunito. On load the hero letters slide in from the side, then the
+kicker, line, and buttons follow; the truck still rolls in. Below that, headings slide in, cards pop,
+and photos tilt as they enter. Motion is CSS plus framer-motion. `prefers-reduced-motion` shows the
+settled page with no animation, and a missed observer never leaves a section hidden.
 
 ## Files
 

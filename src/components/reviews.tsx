@@ -32,7 +32,7 @@ export function Reviews() {
   return (
     <section id="reviews" aria-labelledby="reviews-title" className="scroll-mt-24 overflow-x-clip border-b-[3px] border-ink bg-chili py-16 text-cream sm:py-24">
       <div className={container}>
-        <Reveal>
+        <Reveal from="side">
           <SectionHeading id="reviews-title" kicker="From the line" title="Reviews" tone="cream" />
           {scores.length > 0 && (
             <ul className="mt-6 flex flex-wrap gap-3">
@@ -71,7 +71,7 @@ export function Reviews() {
             const caption = [quote.sourceLabel, place].filter(Boolean).join(" · ");
             return (
               <li key={`${quote.sourceLabel}-${index}`}>
-                <Reveal delay={(index % 3) * 0.08}>
+                <Reveal from="pop" delay={(index % 3) * 0.08}>
                   <figure className="flex h-full flex-col rounded-[1.75rem] border-[3px] border-ink bg-paper p-6 text-ink shadow-[6px_6px_0_0_var(--mt-ink)]">
                     <div className="flex items-start justify-between gap-4">
                       <span aria-hidden="true" className="-mt-3 font-script text-7xl leading-none text-pink-deep">
