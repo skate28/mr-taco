@@ -1,14 +1,14 @@
 import { site } from "@/content";
 import type { MenuItem } from "@/content/types";
+import { telHref } from "@/lib/contact";
 import { faqItems } from "@/lib/faq";
 import { openingHoursSpec } from "@/lib/hours";
 import { directionsHref } from "@/lib/maps";
 import { getMenu, visibleItem } from "@/lib/menu";
 import { offerPrice } from "@/lib/money";
-import { telHref } from "@/lib/contact";
-import { galleryPhotos } from "@/lib/photos";
+import { heroPhoto } from "@/lib/photos";
 import { getSiteUrl } from "@/lib/site-url";
-import { visibleTrucks } from "@/lib/trucks";
+import { visibleLocations } from "@/lib/trucks";
 
 function menuItemNode(item: MenuItem) {
   const entry: Record<string, unknown> = {
@@ -53,29 +53,32 @@ function menuNode(url: string) {
 
 export function JsonLd() {
   const url = getSiteUrl();
-  const trucks = visibleTrucks(site.trucks).map((truck) => {
-    const street = [truck.address.street, truck.address.suite].map((part) => part.trim()).filter(Boolean).join(", ");
+  const places = visibleLocations(site.locations).map((location) => {
     const entry: Record<string, unknown> = {
       "@type": "FoodEstablishment",
-      name: `${site.name} — ${truck.name.trim()}`,
+      name: `${site.name} — ${location.name.trim()}`,
       servesCuisine: site.servesCuisine?.length ? site.servesCuisine : ["Mexican"],
       address: {
         "@type": "PostalAddress",
-        streetAddress: street || undefined,
-        addressLocality: truck.address.city.trim() || undefined,
-        addressRegion: truck.address.region.trim() || undefined,
-        postalCode: truck.address.postalCode.trim() || undefined,
-        addressCountry: truck.address.country.trim() || undefined,
+        streetAddress: location.address.street.trim() || undefined,
+        addressLocality: location.address.city.trim() || undefined,
+        addressRegion: location.address.region.trim() || undefined,
+        postalCode: location.address.postalCode.trim() || undefined,
+        addressCountry: location.address.country.trim() || undefined,
       },
     };
-    const phone = truck.phone?.e164.trim();
-    if (phone && telHref(truck.phone)) entry.telephone = phone;
-    const map = directionsHref(truck);
+    const phone = location.phone?.e164.trim();
+    if (phone && telHref(location.phone)) entry.telephone = phone;
+    const map = directionsHref(location);
     if (map) entry.hasMap = map;
-    if (truck.geo.latitude != null && truck.geo.longitude != null) {
-      entry.geo = { "@type": "GeoCoordinates", latitude: truck.geo.latitude, longitude: truck.geo.longitude };
+    if (location.geo.latitude != null && location.geo.longitude != null) {
+      entry.geo = {
+        "@type": "GeoCoordinates",
+        latitude: location.geo.latitude,
+        longitude: location.geo.longitude,
+      };
     }
-    const hours = openingHoursSpec(truck.hours);
+    const hours = openingHoursSpec(location.hours ?? undefined);
     if (hours) entry.openingHoursSpecification = hours;
     return entry;
   });
@@ -88,11 +91,11 @@ export function JsonLd() {
     description: site.seo.description.trim() || site.description,
     servesCuisine: site.servesCuisine?.length ? site.servesCuisine : ["Mexican"],
   };
-  if (trucks.length > 0) data.location = trucks;
+  if (places.length > 0) data.location = places;
   const menu = menuNode(url);
   if (menu) data.hasMenu = menu;
-  const photo = galleryPhotos(site.photos)[0];
-  if (photo) data.image = `${url}${photo.src}`;
+  const hero = heroPhoto(site.photos, site.heroImage);
+  if (hero) data.image = `${url}${hero.src}`;
 
   const faq = faqItems();
   const blocks: Record<string, unknown>[] = [data];

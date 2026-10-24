@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { PapelPicado } from "@/components/papel-picado";
 import { container, focusOnDark } from "@/components/styles";
 import { Wordmark } from "@/components/wordmark";
@@ -7,52 +9,65 @@ import { phoneLabel, telHref } from "@/lib/contact";
 import { hoursConfirmed, hoursFallback } from "@/lib/hours";
 import { directionsHref } from "@/lib/maps";
 import { httpHref } from "@/lib/ordering";
-import { visibleTrucks } from "@/lib/trucks";
+import { logoPhoto } from "@/lib/photos";
+import { visibleLocations } from "@/lib/trucks";
 
 /** The credit line is always last. */
 export function Footer() {
-  const trucks = visibleTrucks(site.trucks);
-  const links = site.socials.flatMap((link) => {
+  const locations = visibleLocations(site.locations);
+  const links = [...site.socials, ...(site.extraLinks ?? [])].flatMap((link) => {
     const href = httpHref(link.href);
     return href && link.label.trim() ? [{ label: link.label.trim(), href }] : [];
   });
   const credit = site.footerCredit.trim() || "Built by nicklopacki.com";
   const year = new Date().getFullYear();
+  const logo = logoPhoto(site.photos);
 
   return (
-    <footer className="bg-ink pb-28 text-cream md:pb-10">
+    <footer className="overflow-x-clip bg-ink pb-28 text-cream md:pb-10">
       <PapelPicado />
       <div className={cn(container, "grid gap-10 pt-12 md:grid-cols-[1.3fr_1fr]")}>
         <div>
           <Wordmark name={site.name} tone="cream" />
+          {logo && (
+            <Image
+              src={logo.src}
+              alt={logo.alt}
+              width={120}
+              height={Math.round((120 * logo.height) / logo.width)}
+              sizes="120px"
+              className="mt-5 h-auto w-[7.5rem] rounded-xl border-[3px] border-cream/30 bg-paper"
+            />
+          )}
           {site.tagline.trim() && <p className="mt-4 max-w-sm text-cream/80">{site.tagline}</p>}
           {site.opened.trim() && <p className="mt-3 font-display text-sm uppercase tracking-[0.16em] text-lime">Est. {site.opened.trim()}</p>}
         </div>
-        {trucks.length > 0 && (
+        {locations.length > 0 && (
           <div>
             <p className="font-display text-sm uppercase tracking-[0.18em] text-lime">Trucks</p>
             <ul className="mt-4 space-y-4">
-              {trucks.map((truck) => {
-                const directions = directionsHref(truck);
-                const tel = telHref(truck.phone);
-                const hours = truck.hours && hoursConfirmed(truck.hours) ? hoursFallback(truck.hours) : "";
+              {locations.map((location) => {
+                const directions = directionsHref(location);
+                const tel = telHref(location.phone);
+                const hours = location.hours && hoursConfirmed(location.hours) ? hoursFallback(location.hours) : "";
                 return (
-                  <li key={truck.id}>
-                    <a href={`#truck-${truck.id}`} className={cn("font-display text-lg uppercase tracking-wide hover:text-yellow", focusOnDark)}>
-                      {truck.name}
+                  <li key={location.id}>
+                    <a href={`#truck-${location.id}`} className={cn("font-display text-lg uppercase tracking-wide hover:text-yellow", focusOnDark)}>
+                      {location.name}
+                      {location.truckNumber.trim() ? ` ${location.truckNumber.trim()}` : ""}
                     </a>
-                    <p className="text-sm text-cream/80">{truck.address.full}</p>
+                    <p className="text-sm text-cream/80">{location.address.full}</p>
                     {hours && <p className="text-sm text-cream/70">{hours}</p>}
                     <p className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm">
                       {directions && (
                         <a href={directions} target="_blank" rel="noopener noreferrer" className={cn("underline underline-offset-4 hover:text-yellow", focusOnDark)}>
                           Directions
-                          <span className="sr-only"> to {truck.name} (opens in a new tab)</span>
+                          <span className="sr-only"> to {location.name} (opens in a new tab)</span>
                         </a>
                       )}
-                      {tel && truck.phone && (
+                      {tel && location.phone && (
                         <a href={tel} className={cn("font-bold hover:text-yellow", focusOnDark)}>
-                          {phoneLabel(truck.phone)}
+                          {phoneLabel(location.phone)}
                         </a>
                       )}
                     </p>

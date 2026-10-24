@@ -120,12 +120,16 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 5.5rem;
   background: var(--mt-cream);
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 body {
   background-color: var(--mt-cream);
   color: var(--mt-ink);
   font-family: var(--font-sans);
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 address {
@@ -162,6 +166,12 @@ address {
     1px 1px 0 var(--mt-ink),
     2px 2px 0 var(--mt-ink),
     3px 3px 0 var(--mt-ink);
+}
+
+.marquee-clip {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 .color-bar {
@@ -211,6 +221,10 @@ address {
     scroll-behavior: auto;
   }
 
+  .reveal {
+    opacity: 1 !important;
+  }
+
   .animate-marquee,
   .animate-spin-slow,
   .truck-roll,
@@ -223,15 +237,22 @@ address {
   }
 
   .marquee-clip {
-    overflow: visible;
+    overflow: hidden;
   }
 
   .marquee-track {
-    width: auto;
+    width: 100%;
     max-width: 100%;
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 0.25rem;
+  }
+
+  .marquee-track > ul {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .marquee-track > ul:last-child {

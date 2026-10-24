@@ -16,9 +16,9 @@ function initials(name: string): string {
 
 /** Round sticker with the name's initials. No raster logo. */
 export default function Icon() {
-  const chili = site.palette?.chili ?? "#c4161c";
-  const yellow = site.palette?.yellow ?? "#ffe14d";
-  const cream = site.palette?.cream ?? "#fff6e4";
+  const chili = site.palette?.brand ?? "#e23b2e";
+  const yellow = site.palette?.mustard ?? "#ffc83d";
+  const cream = site.palette?.cream ?? "#fff6e3";
   return new ImageResponse(
     (
       <div

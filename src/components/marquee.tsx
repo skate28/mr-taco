@@ -7,10 +7,10 @@ export function Marquee() {
   if (words.length === 0) return null;
 
   return (
-    <div aria-hidden="true" className="marquee-clip overflow-hidden border-b-[3px] border-ink bg-chili py-3 text-yellow">
-      <div className="marquee-track flex w-max animate-marquee">
+    <div aria-hidden="true" className="marquee-clip max-w-full overflow-x-clip border-b-[3px] border-ink bg-chili py-3 text-yellow">
+      <div className="marquee-track flex w-max animate-marquee motion-reduce:w-full motion-reduce:max-w-full motion-reduce:flex-wrap motion-reduce:justify-center">
         {[0, 1].map((copy) => (
-          <ul key={copy} className="flex shrink-0 items-center">
+          <ul key={copy} className="flex shrink-0 items-center motion-reduce:w-full motion-reduce:max-w-full motion-reduce:shrink motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:last:hidden">
             {words.map((word, index) => (
               <li key={`${copy}-${word}-${index}`} className="flex items-center whitespace-nowrap">
                 <span className="px-4 font-display text-2xl uppercase tracking-wide sm:px-6 sm:text-3xl">{word}</span>

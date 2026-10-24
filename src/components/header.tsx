@@ -6,7 +6,7 @@ import type { NavLink } from "@/lib/nav";
 
 export function Header({ links }: { links: NavLink[] }) {
   return (
-    <header className="sticky top-0 z-40 border-b-[3px] border-ink bg-cream/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 overflow-x-clip border-b-[3px] border-ink bg-cream/95 backdrop-blur-sm">
       <div className="color-bar" aria-hidden="true" />
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
         <a href="#content" className={cn("shrink-0 rounded-md", focusRing)} aria-label={`${site.name}, back to top`}>

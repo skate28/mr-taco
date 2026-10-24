@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 import { site } from "@/content";
-import { visibleTrucks } from "@/lib/trucks";
+import { visibleLocations } from "@/lib/trucks";
 
 export const alt = site.name;
 export const size = { width: 1200, height: 630 };
@@ -9,14 +9,14 @@ export const contentType = "image/png";
 
 /** Text-only share card. No photos. */
 export default function OpengraphImage() {
-  const ink = site.palette?.ink ?? "#1a120c";
-  const chili = site.palette?.chili ?? "#c4161c";
-  const yellow = site.palette?.yellow ?? "#ffe14d";
-  const cream = site.palette?.cream ?? "#fff6e4";
-  const lime = site.palette?.lime ?? "#c6ef3a";
-  const turquoise = site.palette?.turquoise ?? "#14c4c4";
-  const places = visibleTrucks(site.trucks)
-    .map((truck) => truck.name.trim())
+  const ink = site.palette?.ink ?? "#1a1410";
+  const chili = site.palette?.brand ?? "#e23b2e";
+  const yellow = site.palette?.mustard ?? "#ffc83d";
+  const cream = site.palette?.cream ?? "#fff6e3";
+  const lime = site.palette?.lime ?? "#8cc63f";
+  const turquoise = site.palette?.accent ?? "#13b5b1";
+  const places = visibleLocations(site.locations)
+    .map((location) => location.name.trim())
     .filter(Boolean)
     .join("  ·  ");
 

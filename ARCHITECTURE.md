@@ -29,9 +29,14 @@ Components import content only via `import { site } from "@/content"`.
 
 ## Page order
 
-Header → Hero (title, tagline, Find a truck, illustrated truck) → dish marquee → Menu → Find a truck →
-Order online → Reviews → Photos → About → FAQ → Footer.
+Header → Hero (lockup, headline, illustrated truck, hero photo) → dish marquee → Favorites →
+Menu (note, choices, cropped menu board) → Fresh → Find a truck → Order online → Reviews →
+Photos → About → FAQ → Footer.
 Phones get a sticky Find a truck bar, plus Menu and Order when those sections exist.
+
+Scroll reveals stay visible until an offscreen block actually intersects, and only when motion is allowed.
+`prefers-reduced-motion` shows every section immediately. The marquee wraps and stays clipped, so the page
+does not scroll sideways. Map cards show a directions fallback until the embed has loaded.
 
 Every content section returns `null` when its content is empty, and its header link disappears with it.
 Call buttons, hours, maps, ordering buttons, and prices hide individually when their fields are empty.

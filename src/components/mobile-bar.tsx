@@ -4,14 +4,14 @@ import { focusOnDark } from "@/components/styles";
 import { site } from "@/content";
 import { cn } from "@/lib/cn";
 import { menuView } from "@/lib/menu";
-import { orderingLinks } from "@/lib/ordering";
-import { visibleTrucks } from "@/lib/trucks";
+import { siteOrderingLinks } from "@/lib/ordering";
+import { visibleLocations } from "@/lib/trucks";
 
 /** Sticky phone actions. Hidden on desktop. A button appears only when its section does. */
 export function MobileBar() {
-  const trucks = visibleTrucks(site.trucks).length > 0;
+  const trucks = visibleLocations(site.locations).length > 0;
   const menu = menuView(site).length > 0;
-  const order = orderingLinks(site).length > 0;
+  const order = siteOrderingLinks(site).length > 0;
   const count = [trucks, menu, order].filter(Boolean).length;
   if (count === 0) return null;
 

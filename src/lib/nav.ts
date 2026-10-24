@@ -1,10 +1,10 @@
 import { site } from "@/content";
 import { hasFaq } from "@/lib/faq";
 import { menuView } from "@/lib/menu";
-import { orderingLinks } from "@/lib/ordering";
+import { siteOrderingLinks } from "@/lib/ordering";
 import { galleryPhotos } from "@/lib/photos";
 import { hasReviews } from "@/lib/reviews";
-import { visibleTrucks } from "@/lib/trucks";
+import { visibleLocations } from "@/lib/trucks";
 
 export type NavLink = {
   href: string;
@@ -19,10 +19,10 @@ export function hasAbout(): boolean {
 export function primaryNav(): NavLink[] {
   return [
     { href: "#menu", label: "Menu", show: menuView(site).length > 0 },
-    { href: "#trucks", label: "Trucks", show: visibleTrucks(site.trucks).length > 0 },
-    { href: "#order", label: "Order", show: orderingLinks(site).length > 0 },
+    { href: "#trucks", label: "Trucks", show: visibleLocations(site.locations).length > 0 },
+    { href: "#order", label: "Order", show: siteOrderingLinks(site).length > 0 },
     { href: "#reviews", label: "Reviews", show: hasReviews(site) },
-    { href: "#photos", label: "Photos", show: galleryPhotos(site.photos).length > 0 },
+    { href: "#photos", label: "Photos", show: galleryPhotos(site.photos, site.heroImage).length > 0 },
     { href: "#about", label: "About", show: hasAbout() },
     { href: "#faq", label: "FAQ", show: hasFaq() },
   ]
