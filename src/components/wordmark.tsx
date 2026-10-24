@@ -6,15 +6,27 @@ export function nameParts(name: string): { lead: string; script: string } {
   return { lead: parts[0] ?? name.trim(), script: parts.slice(1).join(" ") };
 }
 
-export function Wordmark({ name, tone = "ink", className }: { name: string; tone?: "ink" | "cream"; className?: string }) {
+export function Wordmark({
+  name,
+  tone = "ink",
+  className,
+  size = "md",
+}: {
+  name: string;
+  tone?: "ink" | "cream";
+  className?: string;
+  size?: "md" | "header";
+}) {
   const { lead, script } = nameParts(name);
   const leadColor = tone === "cream" ? "text-yellow" : "text-chili";
   const scriptColor = tone === "cream" ? "text-pink" : "text-pink-deep";
+  const leadSize = size === "header" ? "text-xl uppercase sm:text-2xl xl:text-3xl" : "text-2xl uppercase sm:text-3xl";
+  const scriptSize = size === "header" ? "text-xl sm:text-2xl xl:text-3xl" : "text-2xl sm:text-3xl";
 
   return (
     <span className={cn("inline-flex items-baseline gap-1.5", className)}>
-      <span className={cn("font-display text-2xl uppercase leading-none tracking-tight sm:text-3xl", leadColor)}>{lead}</span>
-      {script && <span className={cn("font-script text-2xl leading-none sm:text-3xl", scriptColor)}>{script}</span>}
+      <span className={cn("font-display leading-none tracking-tight", leadSize, leadColor)}>{lead}</span>
+      {script && <span className={cn("font-script leading-none", scriptSize, scriptColor)}>{script}</span>}
     </span>
   );
 }

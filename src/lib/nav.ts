@@ -1,4 +1,5 @@
 import { site } from "@/content";
+import { phoneLabel, telHref } from "@/lib/contact";
 import { hasFaq } from "@/lib/faq";
 import { menuView } from "@/lib/menu";
 import { siteOrderingLinks } from "@/lib/ordering";
@@ -10,6 +11,34 @@ export type NavLink = {
   href: string;
   label: string;
 };
+
+export type HeaderCall = {
+  id: string;
+  name: string;
+  truckNumber: string;
+  place: string;
+  phone: string;
+  tel: string;
+};
+
+/** Tap-to-call rows for the header. Phone strings come from each location, unchanged. */
+export function headerCalls(): HeaderCall[] {
+  return visibleLocations(site.locations).flatMap((location) => {
+    const tel = telHref(location.phone);
+    if (!location.phone || !tel) return [];
+    const place = [location.neighborhood.trim(), location.address.street.trim()].filter(Boolean).join(" · ");
+    return [
+      {
+        id: location.id,
+        name: location.name.trim(),
+        truckNumber: location.truckNumber.trim(),
+        place,
+        phone: phoneLabel(location.phone),
+        tel,
+      },
+    ];
+  });
+}
 
 export function hasAbout(): boolean {
   return site.about.paragraphs.some((paragraph) => paragraph.trim());

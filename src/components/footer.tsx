@@ -24,7 +24,7 @@ export function Footer() {
   const logo = logoPhoto(site.photos);
 
   return (
-    <footer className="overflow-x-clip bg-ink pb-28 text-cream md:pb-10">
+    <footer className="overflow-x-clip bg-ink pb-28 text-cream xl:pb-10">
       <PapelPicado />
       <div className={cn(container, "grid gap-10 pt-12 md:grid-cols-[1.3fr_1fr]")}>
         <div>

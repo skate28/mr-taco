@@ -343,6 +343,23 @@ address {
   }
 }
 
+@keyframes header-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .header-drop {
+    animation: header-drop 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .wiggle:hover {
     animation: wiggle 0.5s ease-in-out;
@@ -376,7 +393,8 @@ address {
   .enter-right,
   .pop-in,
   .tilt-in,
-  .tilt-in-solid {
+  .tilt-in-solid,
+  .header-drop {
     animation: none;
   }
 
