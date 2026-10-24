@@ -26,6 +26,9 @@ export type MenuTabCategory = {
 export function MenuTabs({ categories }: { categories: MenuTabCategory[] }) {
   const [active, setActive] = useState(categories[0]?.id ?? "");
   const reduce = useReducedMotion();
+  const [motionOk] = useState(
+    () => typeof window !== "undefined" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
   const baseId = useId();
   const current = categories.find((category) => category.id === active) ?? categories[0];
   if (!current) return null;
@@ -56,7 +59,7 @@ export function MenuTabs({ categories }: { categories: MenuTabCategory[] }) {
             document.getElementById(`${baseId}-tab-${id}`)?.focus();
           }}
         >
-          {categories.map((category) => {
+          {categories.map((category, index) => {
             const selected = category.id === current.id;
             return (
               <button
@@ -69,10 +72,11 @@ export function MenuTabs({ categories }: { categories: MenuTabCategory[] }) {
                 tabIndex={selected ? 0 : -1}
                 onClick={() => setActive(category.id)}
                 className={cn(
-                  "shrink-0 whitespace-nowrap rounded-full border-[3px] border-ink px-5 py-2 font-display text-sm uppercase tracking-wide",
+                  "pop-in shrink-0 whitespace-nowrap rounded-full border-[3px] border-ink px-5 py-2 font-display text-sm uppercase tracking-wide",
                   selected ? "bg-chili text-cream shadow-[0_4px_0_0_var(--mt-ink)]" : "bg-paper text-ink hover:bg-yellow",
                   focusRing,
                 )}
+                style={{ animationDelay: `${index * 0.045}s` }}
               >
                 {category.name}
               </button>
@@ -91,10 +95,14 @@ export function MenuTabs({ categories }: { categories: MenuTabCategory[] }) {
         <AnimatePresence mode="wait">
           <motion.div
             key={current.id}
-            initial={reduce === false ? { opacity: 0, y: 10 } : false}
-            animate={{ opacity: 1, y: 0 }}
-            {...(reduce === false ? { exit: { opacity: 0, y: -8 } } : {})}
-            transition={{ duration: reduce === false ? 0.22 : 0 }}
+            initial={motionOk && reduce !== true ? { opacity: 0, x: 36 } : false}
+            animate={{ opacity: 1, x: 0 }}
+            {...(motionOk && reduce !== true ? { exit: { opacity: 0, x: -24 } } : {})}
+            transition={
+              motionOk && reduce !== true
+                ? { type: "spring", stiffness: 340, damping: 22 }
+                : { duration: 0 }
+            }
           >
             <h3 className="font-display text-3xl uppercase text-chili sm:text-4xl">{current.name}</h3>
             {current.description && <p className="mt-2 max-w-2xl text-ink/75">{current.description}</p>}

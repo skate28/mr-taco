@@ -12,7 +12,7 @@ export function About() {
   return (
     <section id="about" aria-labelledby="about-title" className="scroll-mt-24 overflow-x-clip border-b-[3px] border-ink bg-lime py-16 sm:py-24">
       <div className={container}>
-        <Reveal>
+        <Reveal from="side">
           <SectionHeading id="about-title" title={heading} />
         </Reveal>
         <div className="mt-8 max-w-3xl space-y-4 text-lg font-semibold leading-relaxed">

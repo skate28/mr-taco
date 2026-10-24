@@ -187,13 +187,13 @@ address {
 }
 
 .truck-roll {
-  animation: truck-in 1.35s cubic-bezier(0.16, 0.84, 0.24, 1) both;
+  animation: truck-in 1.35s cubic-bezier(0.16, 0.84, 0.24, 1) 0.28s both;
 }
 
 .wheel {
   transform-box: fill-box;
   transform-origin: center;
-  animation: wheel-spin 1.35s linear both;
+  animation: wheel-spin 1.35s linear 0.28s both;
 }
 
 .steam {
@@ -204,6 +204,143 @@ address {
 
 .sizzle {
   animation: sizzle 0.9s ease-in-out infinite;
+}
+
+@keyframes hero-letter {
+  0% {
+    transform: translateX(-1.35em) rotate(-14deg) scale(0.72);
+    opacity: 0;
+  }
+  62% {
+    transform: translateX(0.12em) rotate(5deg) scale(1.06);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes hero-script {
+  0% {
+    transform: translateX(-46%) rotate(-8deg);
+    opacity: 0;
+  }
+  68% {
+    transform: translateX(3%) rotate(2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes enter-side {
+  0% {
+    transform: translateX(-18%);
+    opacity: 0;
+  }
+  70% {
+    transform: translateX(2%);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes enter-right {
+  0% {
+    transform: translateX(16%);
+    opacity: 0;
+  }
+  70% {
+    transform: translateX(-2%);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    transform: translateY(14px) scale(0.86);
+    opacity: 0;
+  }
+  65% {
+    transform: translateY(-3px) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes tilt-in-solid {
+  0% {
+    transform: rotate(calc(var(--rest, 0deg) + 10deg)) translateY(18px) scale(0.96);
+  }
+  64% {
+    transform: rotate(calc(var(--rest, 0deg) - 2deg)) translateY(-2px) scale(1.03);
+  }
+  100% {
+    transform: rotate(var(--rest, 0deg)) scale(1);
+  }
+}
+
+@keyframes tilt-in {
+  0% {
+    transform: rotate(calc(var(--rest, 0deg) + 12deg)) translateY(16px) scale(0.9);
+    opacity: 0;
+  }
+  64% {
+    transform: rotate(calc(var(--rest, 0deg) - 3deg)) translateY(-3px) scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--rest, 0deg)) scale(1);
+    opacity: 1;
+  }
+}
+
+.tilt-in,
+.tilt-in-solid {
+  transform: rotate(var(--rest, 0deg));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-letter {
+    animation: hero-letter 0.64s cubic-bezier(0.22, 1.45, 0.36, 1) both;
+  }
+
+  .hero-script {
+    animation: hero-script 0.78s cubic-bezier(0.22, 1.35, 0.36, 1) both;
+  }
+
+  .enter {
+    animation: enter-side 0.68s cubic-bezier(0.22, 1.35, 0.36, 1) both;
+  }
+
+  .enter-right {
+    animation: enter-right 0.68s cubic-bezier(0.22, 1.35, 0.36, 1) both;
+  }
+
+  .pop-in {
+    animation: pop-in 0.58s cubic-bezier(0.22, 1.5, 0.36, 1) both;
+  }
+
+  .tilt-in {
+    animation: tilt-in 0.72s cubic-bezier(0.22, 1.4, 0.36, 1) both;
+  }
+
+  .tilt-in-solid {
+    animation: tilt-in-solid 0.78s cubic-bezier(0.22, 1.35, 0.36, 1) both;
+  }
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -232,8 +369,24 @@ address {
   .steam,
   .sizzle,
   .wiggle,
-  .pop {
+  .pop,
+  .hero-letter,
+  .hero-script,
+  .enter,
+  .enter-right,
+  .pop-in,
+  .tilt-in,
+  .tilt-in-solid {
     animation: none;
+  }
+
+  .hero-letter,
+  .hero-script,
+  .enter,
+  .enter-right,
+  .pop-in {
+    opacity: 1;
+    transform: none;
   }
 
   .marquee-clip {

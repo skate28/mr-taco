@@ -42,7 +42,7 @@ export function Locations() {
     <section id="trucks" aria-labelledby="trucks-title" className="relative scroll-mt-24 overflow-x-clip border-b-[3px] border-ink bg-cream py-16 sm:py-24">
       <div aria-hidden="true" className="paper-dots pointer-events-none absolute inset-0 opacity-80" />
       <div className={cn(container, "relative")}>
-        <Reveal>
+        <Reveal from="side">
           <SectionHeading id="trucks-title" kicker={kicker} title="Find a truck" />
         </Reveal>
         <ul className="mt-10 grid gap-8 lg:grid-cols-2">
@@ -68,7 +68,7 @@ export function Locations() {
 
             return (
               <li key={location.id} id={`truck-${location.id}`} className="scroll-mt-28">
-                <Reveal delay={(index % 2) * 0.08} className="h-full">
+                <Reveal from="pop" delay={(index % 2) * 0.08} className="h-full">
                   <article
                     className={cn("wiggle flex h-full flex-col overflow-hidden", card, TILTS[index % TILTS.length])}
                     style={{ ["--tilt" as string]: index % 2 === 0 ? "-1deg" : "1deg" }}
@@ -88,10 +88,11 @@ export function Locations() {
                             {shots.map((shot, shotIndex) => (
                               <li key={shot.src} className={cn(shotIndex > 0 && "-ml-6")}>
                                 <figure
-                                  className={cn(
-                                    "w-[6.5rem] rounded-sm border-[3px] border-ink bg-paper p-1.5 shadow-[4px_4px_0_0_var(--mt-ink)] sm:w-[7.5rem]",
-                                    shotIndex % 2 === 0 ? "-rotate-6" : "rotate-3",
-                                  )}
+                                  className="tilt-in w-[6.5rem] rounded-sm border-[3px] border-ink bg-paper p-1.5 shadow-[4px_4px_0_0_var(--mt-ink)] sm:w-[7.5rem]"
+                                  style={{
+                                    ["--rest" as string]: shotIndex % 2 === 0 ? "-6deg" : "3deg",
+                                    animationDelay: `${0.08 + shotIndex * 0.1}s`,
+                                  }}
                                 >
                                   <Image
                                     src={shot.src}

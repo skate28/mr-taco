@@ -14,13 +14,13 @@ export function Fresh() {
   return (
     <section aria-labelledby="fresh-title" className="overflow-x-clip border-b-[3px] border-ink bg-lime py-16 sm:py-20">
       <div className={container}>
-        <Reveal>
+        <Reveal from="side">
           <SectionHeading id="fresh-title" kicker="At the truck" title="Fresh" />
         </Reveal>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2">
           {photos.map((photo, index) => (
             <li key={photo.src}>
-              <Reveal delay={index * 0.06}>
+              <Reveal from="pop" delay={index * 0.06}>
                 <figure className="rounded-[1.75rem] border-[3px] border-ink bg-paper p-2 shadow-[6px_6px_0_0_var(--mt-ink)]">
                   <Image
                     src={photo.src}

@@ -15,13 +15,13 @@ export function Gallery() {
   return (
     <section id="photos" aria-labelledby="photos-title" className="scroll-mt-24 overflow-x-clip border-b-[3px] border-ink bg-yellow py-16 sm:py-24">
       <div className={container}>
-        <Reveal>
+        <Reveal from="side">
           <SectionHeading id="photos-title" kicker="On the street" title="Photos" />
         </Reveal>
         <ul className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3">
           {photos.map((photo, index) => (
             <li key={photo.src} className="mb-4 break-inside-avoid">
-              <Reveal delay={(index % 3) * 0.06}>
+              <Reveal from="tilt" delay={(index % 3) * 0.06}>
                 <figure className={cn("rounded-2xl border-[3px] border-ink bg-paper p-2 shadow-[6px_6px_0_0_var(--mt-ink)]", index % 2 ? "rotate-1" : "-rotate-1")}>
                   <Image
                     src={photo.src}

@@ -22,10 +22,10 @@ export function Order() {
   return (
     <section id="order" aria-labelledby="order-title" className="scroll-mt-24 overflow-x-clip border-b-[3px] border-ink bg-turquoise py-16 sm:py-24">
       <div className={container}>
-        <Reveal>
+        <Reveal from="side">
           <SectionHeading id="order-title" title="Order online" />
         </Reveal>
-        <Reveal delay={0.08}>
+        <Reveal from="pop" delay={0.08}>
           <ul className="mt-8 flex flex-wrap gap-4">
             {links.map((link) => (
               <li key={link.href}>

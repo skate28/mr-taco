@@ -1,5 +1,6 @@
 import { Bob } from "@/components/bob";
 import { ChiliMark, LimeArt, TacoArt } from "@/components/bits";
+import { HeroTitle, afterLockup } from "@/components/hero-title";
 import { PapelPicado } from "@/components/papel-picado";
 import { SpinBadge } from "@/components/spin-badge";
 import { buttonChili, container, focusRing } from "@/components/styles";
@@ -24,44 +25,39 @@ export function Hero() {
   const scores = reviewScores(site);
   const photo = heroPhoto(site.photos, site.heroImage);
   const ring = [...(site.servesCuisine ?? []), locations[0]?.address.city ?? ""].map((part) => part.trim()).filter(Boolean).join(" · ");
+  const follow = afterLockup(lead);
 
   return (
     <section aria-label="Welcome" className="relative overflow-hidden border-b-[3px] border-ink bg-yellow">
       <div aria-hidden="true" className="hero-dots pointer-events-none absolute inset-0 opacity-70" />
       <PapelPicado />
       <div className={cn(container, "relative grid items-center gap-8 pb-12 pt-6 sm:pb-16 sm:pt-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-4 lg:pb-20")}>
-        <div className="relative z-10">
+        <div className="relative z-10 min-w-0 overflow-x-clip">
           {kicker && (
-            <p className="mb-4 inline-flex items-center gap-2 rounded-full border-[3px] border-ink bg-paper px-4 py-1.5 font-display text-xs uppercase tracking-[0.14em] shadow-[0_4px_0_0_var(--mt-ink)] sm:text-sm">
+            <p
+              className="enter mb-4 inline-flex max-w-full items-center gap-2 rounded-full border-[3px] border-ink bg-paper px-4 py-1.5 font-display text-xs uppercase tracking-[0.14em] shadow-[0_4px_0_0_var(--mt-ink)] sm:text-sm"
+              style={{ animationDelay: `${follow}s` }}
+            >
               <MapPin className="size-4 text-chili" aria-hidden="true" />
               {kicker}
             </p>
           )}
-          <h1 className="max-w-xl">
-            <span className="block font-display text-[clamp(4.2rem,14vw,7.5rem)] uppercase leading-[0.78] tracking-tight text-chili sign-extrude">
-              {lead}
-            </span>
-            {script && (
-              <span className="mt-1 block pl-6 sm:pl-14">
-                <span className="relative inline-block -rotate-6">
-                  <span aria-hidden="true" className="absolute inset-x-[-6%] bottom-[12%] top-[38%] -z-10 rounded-full bg-pink" />
-                  <span className="font-script text-[clamp(3.4rem,11vw,6rem)] leading-none text-ink">{script}</span>
-                </span>
-              </span>
-            )}
-            {headline && (
-              <span className="mt-5 block max-w-md font-display text-[clamp(1.6rem,4vw,2.4rem)] uppercase leading-[0.95] tracking-tight text-ink">
-                {headline}
-              </span>
-            )}
-          </h1>
-          {subline && <p className="mt-5 max-w-xl text-lg font-extrabold leading-snug sm:text-xl">{subline}</p>}
-          {showTagline && <p className="mt-3 font-script text-3xl text-pink-deep">{tagline}</p>}
+          <HeroTitle lead={lead} script={script} headline={headline} />
+          {subline && (
+            <p className="enter mt-5 max-w-xl text-lg font-extrabold leading-snug sm:text-xl" style={{ animationDelay: `${follow + 0.1}s` }}>
+              {subline}
+            </p>
+          )}
+          {showTagline && (
+            <p className="enter mt-3 font-script text-3xl text-pink-deep" style={{ animationDelay: `${follow + 0.18}s` }}>
+              {tagline}
+            </p>
+          )}
 
           {scores.length > 0 && (
             <ul className="mt-5 flex flex-wrap gap-3">
-              {scores.map((score) => (
-                <li key={score.source}>
+              {scores.map((score, index) => (
+                <li key={score.source} className="enter" style={{ animationDelay: `${follow + 0.24 + index * 0.06}s` }}>
                   <a
                     href={score.href ?? "#reviews"}
                     {...(score.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}
@@ -81,15 +77,15 @@ export function Hero() {
 
           {locations.length > 0 && (
             <>
-              <div className="mt-7">
+              <div className="enter mt-7" style={{ animationDelay: `${follow + 0.42}s` }}>
                 <a href="#trucks" className={buttonChili}>
                   <MapPin className="size-5" aria-hidden="true" />
                   Find a truck
                 </a>
               </div>
               <ul className="mt-5 flex flex-wrap gap-2">
-                {locations.map((location) => (
-                  <li key={location.id}>
+                {locations.map((location, index) => (
+                  <li key={location.id} className="enter" style={{ animationDelay: `${follow + 0.5 + index * 0.07}s` }}>
                     <a
                       href={`#truck-${location.id}`}
                       className={cn(
@@ -117,7 +113,10 @@ export function Hero() {
             <LimeArt className="size-12 sm:size-14" />
           </Bob>
           {photo && (
-            <figure className="relative z-[1] mx-auto mb-[-18%] w-[86%] max-w-md rotate-[-2.5deg] rounded-[1.4rem] border-[3px] border-ink bg-paper p-2 shadow-[8px_8px_0_0_var(--mt-ink)] sm:mb-[-22%]">
+            <figure
+              className="tilt-in-solid relative z-[1] mx-auto mb-[-18%] w-[86%] max-w-md rounded-[1.4rem] border-[3px] border-ink bg-paper p-2 shadow-[8px_8px_0_0_var(--mt-ink)] sm:mb-[-22%]"
+              style={{ ["--rest" as string]: "-2.5deg", animationDelay: "0.34s" }}
+            >
               <Image
                 src={photo.src}
                 alt={photo.alt}
@@ -133,9 +132,11 @@ export function Hero() {
             <TruckArt animate label={`Illustrated ${site.name} food truck`} />
           </div>
           {ring && (
-            <SpinBadge text={ring} className="absolute bottom-1 left-0 z-30 w-24 -rotate-6 sm:w-28">
-              <ChiliMark className="size-8" />
-            </SpinBadge>
+            <div className="pop-in absolute bottom-1 left-0 z-30" style={{ animationDelay: "0.95s" }}>
+              <SpinBadge text={ring} className="w-24 -rotate-6 sm:w-28">
+                <ChiliMark className="size-8" />
+              </SpinBadge>
+            </div>
           )}
         </div>
       </div>
