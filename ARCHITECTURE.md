@@ -34,7 +34,7 @@ Components import content only via `import { site } from "@/content"`.
 Header → Hero (lockup, headline, illustrated truck, hero photo) → dish marquee → Favorites →
 Menu (note, choices, cropped menu board) → Fresh → Find a truck → Order online → Reviews →
 Photos → About → FAQ → Footer.
-Phones get a sticky Find a truck bar, plus Menu and Order when those sections exist.
+Below the wide header, phones get a sticky Call, Find, Menu, and Order bar. The wide header shows the section links plus Call, Find a truck, and Order.
 
 Scroll reveals stay visible until an offscreen block actually intersects, and only when motion is allowed.
 `prefers-reduced-motion` shows every section immediately. The marquee wraps and stays clipped, so the page

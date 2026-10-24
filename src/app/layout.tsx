@@ -5,13 +5,15 @@ import type { CSSProperties, ReactNode } from "react";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { JsonLd } from "@/components/json-ld";
-import { MobileBar } from "@/components/mobile-bar";
 import { focusRing } from "@/components/styles";
 import { site } from "@/content";
 import type { Palette } from "@/content/types";
 import { cn } from "@/lib/cn";
 import { allowIndexing } from "@/lib/indexing";
-import { primaryNav } from "@/lib/nav";
+import { menuView } from "@/lib/menu";
+import { headerCalls, primaryNav } from "@/lib/nav";
+import { siteOrderingLinks } from "@/lib/ordering";
+import { visibleLocations } from "@/lib/trucks";
 import { getSiteUrl } from "@/lib/site-url";
 
 import "./globals.css";
@@ -97,10 +99,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           Skip to content
         </a>
-        <Header links={primaryNav()} />
+        <Header
+          name={site.name}
+          links={primaryNav()}
+          calls={headerCalls()}
+          showTrucks={visibleLocations(site.locations).length > 0}
+          showMenu={menuView(site).length > 0}
+          showOrder={siteOrderingLinks(site).length > 0}
+        />
         {children}
         <Footer />
-        <MobileBar />
         <JsonLd />
       </body>
     </html>
